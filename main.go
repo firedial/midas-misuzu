@@ -18,6 +18,7 @@ func main() {
 
     r := gin.Default()
     r.Use(cors.Default())
+    r.Use(Auth())
 
     api := r.Group("/api/v1")
     {
@@ -35,6 +36,17 @@ func main() {
         api.GET("/place/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("place")) } )
         api.GET("/sum/", func(c *gin.Context) { c.JSON(200, controller.SumGet(c.Request.URL.Query())) } )
     }
-
     r.Run()
+
+}
+
+func Auth() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        token := c.Request.Header.Get("Authorization")
+        
+        if token != "Bearer token" {
+            //c.AbortWithStatus(401)
+        }
+        c.Next()
+    }
 }
