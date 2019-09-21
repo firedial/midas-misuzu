@@ -3,7 +3,7 @@ package entity
 import (
     "strings"
 
-    "github.com/firedial/midas-go/util"
+    "github.com/firedial/midas-misuzu/util"
 )
 
 type Balance struct {

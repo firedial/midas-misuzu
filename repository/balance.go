@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/firedial/midas-go/entity"
+import "github.com/firedial/midas-misuzu/entity"
 
 type BalanceRepository interface {
     SaveAll(entity.Balances) error

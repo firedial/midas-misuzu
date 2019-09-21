@@ -3,8 +3,8 @@ package dao
 import (
     "database/sql"
 
-    "github.com/firedial/midas-go/entity"
-    "github.com/firedial/midas-go/db"
+    "github.com/firedial/midas-misuzu/entity"
+    "github.com/firedial/midas-misuzu/db"
 )
 
 type MysqlBalanceRepository struct {

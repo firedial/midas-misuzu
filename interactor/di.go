@@ -1,7 +1,8 @@
 package interactor
 
 import (
-    "github.com/firedial/midas-go/dao"
+    "github.com/firedial/midas-misuzu/dao"
+	"github.com/firedial/midas-misuzu/repository"
 )
 
 var attributeRepository repository.AttributeRepository = &dao.MysqlAttributeRepository{}

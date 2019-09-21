@@ -4,7 +4,7 @@ import (
     "database/sql"
     _ "github.com/go-sql-driver/mysql"
 
-    "github.com/firedial/midas-go/config"
+    "github.com/firedial/midas-misuzu/config"
 )
 
 func Init() *sql.DB {

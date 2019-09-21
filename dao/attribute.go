@@ -1,8 +1,8 @@
 package dao
 
 import (
-    "github.com/firedial/midas-go/entity"
-    "github.com/firedial/midas-go/db"
+    "github.com/firedial/midas-misuzu/entity"
+    "github.com/firedial/midas-misuzu/db"
 )
 
 type MysqlAttributeRepository struct {

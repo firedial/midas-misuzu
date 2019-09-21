@@ -1,8 +1,7 @@
 package interactor
 
 import (
-    "github.com/firedial/midas-go/entity"
-    "github.com/firedial/midas-go/repository"
+    "github.com/firedial/midas-misuzu/entity"
 )
 
 func GetAttribute(attributeName string) (entity.Attributes, error) {

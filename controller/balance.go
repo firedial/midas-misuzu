@@ -1,8 +1,8 @@
 package controller
 
 import(
-    "github.com/firedial/midas-go/entity"
-    "github.com/firedial/midas-go/interactor"
+    "github.com/firedial/midas-misuzu/entity"
+    "github.com/firedial/midas-misuzu/interactor"
 )
 
 func BalanceGet(queries map[string][]string) entity.Balances {

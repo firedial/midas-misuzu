@@ -4,10 +4,10 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/gin-contrib/cors"
 
-    "github.com/firedial/midas-go/controller"
-    "github.com/firedial/midas-go/config"
-    "github.com/firedial/midas-go/entity"
-    "github.com/firedial/midas-go/interactor"
+    "github.com/firedial/midas-misuzu/controller"
+    "github.com/firedial/midas-misuzu/config"
+    "github.com/firedial/midas-misuzu/entity"
+    "github.com/firedial/midas-misuzu/interactor"
 )
 
 func main() {

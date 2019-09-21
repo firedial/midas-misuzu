@@ -1,8 +1,8 @@
 package controller
 
 import(
-    "github.com/firedial/midas-go/interactor"
-    "github.com/firedial/midas-go/entity"
+    "github.com/firedial/midas-misuzu/interactor"
+    "github.com/firedial/midas-misuzu/entity"
 )
 
 func AttributeGet(attribute_name string) entity.Attributes {

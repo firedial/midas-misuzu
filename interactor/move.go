@@ -1,7 +1,7 @@
 package interactor
 
 import (
-    "github.com/firedial/midas-go/entity"
+    "github.com/firedial/midas-misuzu/entity"
 )
 
 type Move struct {

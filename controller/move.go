@@ -1,7 +1,7 @@
 package controller
 
 import(
-    "github.com/firedial/midas-go/interactor"
+    "github.com/firedial/midas-misuzu/interactor"
 )
 
 func MovePost(move interactor.Move) string {

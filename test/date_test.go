@@ -3,7 +3,7 @@ package test
 import (
     "testing"
 
-    "github.com/firedial/midas-go/util"
+    "github.com/firedial/midas-misuzu/util"
 )
 
 func TestIsSuitableDate_1(t *testing.T) {
