@@ -56,3 +56,52 @@ func TestIsSuitableDate_2(t *testing.T) {
         t.Error("日は32未満の値です")
     }
 }
+
+func TestIsSuitableString_1(t *testing.T) {
+    if util.IsSuitableString("") {
+        t.Error("空文字列は無効です")
+    }
+
+    if util.IsSuitableString("'") {
+        t.Error("シングルクォーテーションは無効です")
+    }
+    if util.IsSuitableString("\"") {
+        t.Error("ダブルクォーテーションは無効です")
+    }
+    if util.IsSuitableString(":") {
+        t.Error("コロンは無効です")
+    }
+    if util.IsSuitableString(".") {
+        t.Error("ドットは無効です")
+    }
+    if util.IsSuitableString(" ") {
+        t.Error("半角空白は無効です")
+    }
+
+    if util.IsSuitableString("abc'def") {
+        t.Error("シングルクォーテーションは無効です")
+    }
+    if util.IsSuitableString("abc\"def") {
+        t.Error("ダブルクォーテーションは無効です")
+    }
+    if util.IsSuitableString("abc:def") {
+        t.Error("コロンは無効です")
+    }
+    if util.IsSuitableString("abc.def") {
+        t.Error("ドットは無効です")
+    }
+    if util.IsSuitableString("abc def") {
+        t.Error("半角空白は無効です")
+    }
+
+    if !util.IsSuitableString("abc123ABC") {
+        t.Error("半角英数字は有効です")
+    }
+    if !util.IsSuitableString("全角文字は有効です。") {
+        t.Error("全角文字は有効です")
+    }
+    if !util.IsSuitableString("!#$%&()=-~^|@`[{+;*]}<>,/?_\\") {
+        t.Error("これらの半角記号は有効です")
+    }
+
+}
