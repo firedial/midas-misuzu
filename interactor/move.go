@@ -17,15 +17,15 @@ func InsertMove(move Move) string {
     balances := getMoveBalance(move)
 
     if !entity.IsSuitableBalances(balances) {
-        return "Not Move!"
+        return "\"Not Move!\""
     }
 
     err := balanceRepository.SaveAll(balances);
     if err != nil {
-        return "DB error!"
+        return "\"DB error!\""
     }
 
-    return "OK"
+    return "\"OK\""
 }
 
 func getMoveBalance(move Move) entity.Balances {
