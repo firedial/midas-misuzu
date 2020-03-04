@@ -1,8 +1,6 @@
 package dao
 
 import (
-    "strconv"
-    
     "github.com/firedial/midas-misuzu/entity"
     "github.com/firedial/midas-misuzu/db"
 )
@@ -11,12 +9,18 @@ type MysqlSumRepository struct {
     
 }
 
-func (MysqlSumRepository) Find(attributeName string, groupByDate string, startDate int, endDate int) (sums entity.Sums, err error) {
+func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, err error) {
     db := db.Init();
     defer db.Close();
 
+    where, args := getBalanceWhere(queries)
+
     var groupByDateQuery string
     var dateColumn string
+    groupByDate := ""
+    if len(queries["groupByDate"]) != 0 {
+        groupByDate = queries["groupByDate"][0]
+    }
     switch groupByDate {
     case "day":
         groupByDateQuery = "DATE_FORMAT(date, '%Y%m%d')"
@@ -37,6 +41,10 @@ func (MysqlSumRepository) Find(attributeName string, groupByDate string, startDa
 
     var groupByAttributeQuery string
     var attributeColumn string
+    attributeName := ""
+    if len(queries["atrributeName"]) != 0 {
+        attributeName = queries["attributeName"][0]
+    }
     switch attributeName {
     case "place":
         groupByAttributeQuery = "place_id"
@@ -67,17 +75,9 @@ func (MysqlSumRepository) Find(attributeName string, groupByDate string, startDa
         }
     }
 
-    where := "WHERE 1 = 1"
-    if startDate != 0 {
-        where += " AND date >= " + strconv.Itoa(startDate)
-    }
-    if endDate != 0 {
-        where += " AND date <= " + strconv.Itoa(endDate)
-    }
-
     query := "SELECT " + attributeColumn + ", " + dateColumn + ", " + "sum(amount) as sum FROM balance"
 
-    rows, err := db.Query(query + " " + where + " " + groupBy)
+    rows, err := db.Query(query + " " + where + " " + groupBy, args...)
     defer rows.Close()
     if err != nil {
         return []entity.Sum{}, err

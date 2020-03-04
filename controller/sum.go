@@ -6,11 +6,7 @@ import(
 )
 
 func SumGet(queries map[string][]string) entity.Sums {
-    sums, _ := interactor.GetSum(
-        getQuery(queries, "attributeName"),
-        getQuery(queries, "groupByDate"),
-        getQuery(queries, "startDate"),
-        getQuery(queries, "endDate"))
+    sums, _ := interactor.GetSum(queries)
     return sums
 }
 
