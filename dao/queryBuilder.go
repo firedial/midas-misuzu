@@ -1,5 +1,9 @@
 package dao
 
+import (
+    "github.com/firedial/midas-misuzu/config"
+    "strconv"
+)
 
 func getBalanceWhere(queries map[string][]string) (string, []interface{}) {
     args := []interface{}{}
@@ -33,7 +37,9 @@ func getBalanceWhere(queries map[string][]string) (string, []interface{}) {
 
     whereMove := ""
     if len(queries["move"]) != 0 {
-        whereMove = " and kind_id <> 0 and purpose_id <> 0 and place_id <> 0"
+        whereMove += " and kind_id <> " + strconv.Itoa(config.KIND_MOVE_ID)
+        whereMove += " and purpose_id <> " + strconv.Itoa(config.PURPOSE_MOVE_ID)
+        whereMove += " and place_id <> " + strconv.Itoa(config.PLACE_MOVE_ID)
     }
 
     where := " where 1 = 1" + whereKind + wherePurpose + wherePlace + whereStart + whereEnd + whereMove

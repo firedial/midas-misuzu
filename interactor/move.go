@@ -2,6 +2,7 @@ package interactor
 
 import (
     "github.com/firedial/midas-misuzu/entity"
+    "github.com/firedial/midas-misuzu/config"
 )
 
 type Move struct {
@@ -34,24 +35,24 @@ func getMoveBalance(move Move) entity.Balances {
 
     beforeBalance.Amount = -1 * move.Amount
     afterBalance.Amount = move.Amount
-    beforeBalance.KindId = 14
-    afterBalance.KindId = 14
+    beforeBalance.KindId = config.KIND_MOVE_ID
+    afterBalance.KindId = config.KIND_MOVE_ID
     beforeBalance.Date = move.Date
     afterBalance.Date = move.Date
 
     if move.Attribute == "purpose" {
         beforeBalance.Item = "予算移動元"
         afterBalance.Item = "予算移動先"
-        beforeBalance.PlaceId = 4
-        afterBalance.PlaceId = 4
+        beforeBalance.PlaceId = config.PLACE_MOVE_ID 
+        afterBalance.PlaceId = config.PLACE_MOVE_ID
 
         beforeBalance.PurposeId = move.BeforeId 
         afterBalance.PurposeId = move.AfterId
     } else if move.Attribute == "place" {
         beforeBalance.Item = "場所移動元"
         afterBalance.Item = "場所移動先"
-        beforeBalance.PurposeId = 12 
-        afterBalance.PurposeId = 12 
+        beforeBalance.PurposeId = config.PURPOSE_MOVE_ID
+        afterBalance.PurposeId = config.PURPOSE_MOVE_ID
 
         beforeBalance.PlaceId = move.BeforeId 
         afterBalance.PlaceId = move.AfterId
