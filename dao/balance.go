@@ -48,28 +48,51 @@ func (MysqlBalanceRepository) FindAll() (balances entity.Balances, err error) {
     return
 }
 
-func (MysqlBalanceRepository) Find(kinds []string) (balances entity.Balances, err error) {
+func (MysqlBalanceRepository) Find(queries map[string][]string) (balances entity.Balances, err error) {
     db := db.Init();
     defer db.Close();
 
     args := []interface{}{}
 
     whereKind := ""
-    if len(kinds) != 0 {
-        whereKind = "kind_id in " + getPlaceholder(len(kinds))
-        args = pushArgs(args, kinds)
-        whereKind = " where " + whereKind
+    if len(queries["kind"]) != 0 {
+        whereKind = " and kind_id in " + getPlaceholder(len(queries["kind"]))
+        args = pushArgs(args, queries["kind"])
     }
+    wherePurpose := ""
+    if len(queries["purpose"]) != 0 {
+        wherePurpose = " and purpose_id in " + getPlaceholder(len(queries["purpose"]))
+        args = pushArgs(args, queries["purpose"])
+    }
+    wherePlace := ""
+    if len(queries["place"]) != 0 {
+        wherePlace = " and place_id in " + getPlaceholder(len(queries["place"]))
+        args = pushArgs(args, queries["place"])
+    }
+
+    whereStart := ""
+    if len(queries["start"]) != 0 {
+        whereStart = " and date >= ?"
+        args = append(args, queries["start"][0])
+    }
+    whereEnd := ""
+    if len(queries["end"]) != 0 {
+        whereEnd = " and date <= ?"
+        args = append(args, queries["end"][0])
+    }
+
+    where := " where 1 = 1" + whereKind + wherePurpose + wherePlace + whereStart + whereEnd
 
     query := "SELECT balance_id, amount, item, kind_id, purpose_id, place_id, date FROM balance"
 
-    rows, err := db.Query(query + whereKind, args...)
+    rows, err := db.Query(query + where, args...)
     
     defer rows.Close()
     if err != nil {
         return
     }
 
+    balances = []entity.Balance{}
     for rows.Next() {
         var balance_id int
         var amount int

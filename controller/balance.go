@@ -6,8 +6,7 @@ import(
 )
 
 func BalanceGet(queries map[string][]string) entity.Balances {
-    //id := queries["id"][0]
-    balances, _ := interactor.GetBalance(queries["kind"])
+    balances, _ := interactor.GetBalance(queries)
     return balances
 }
 
