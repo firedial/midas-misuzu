@@ -4,8 +4,8 @@ import (
     "github.com/firedial/midas-misuzu/entity"
 )
 
-func GetBalance() (entity.Balances, error) {
-    return balanceRepository.FindAll()
+func GetBalance(kinds []string) (entity.Balances, error) {
+    return balanceRepository.Find(kinds)
 }
 
 func InsertBalances(balance entity.Balance) string {

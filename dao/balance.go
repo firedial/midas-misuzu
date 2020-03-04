@@ -48,6 +48,55 @@ func (MysqlBalanceRepository) FindAll() (balances entity.Balances, err error) {
     return
 }
 
+func (MysqlBalanceRepository) Find(kinds []string) (balances entity.Balances, err error) {
+    db := db.Init();
+    defer db.Close();
+
+    args := []interface{}{}
+
+    whereKind := ""
+    if len(kinds) != 0 {
+        whereKind = "kind_id in " + getPlaceholder(len(kinds))
+        args = pushArgs(args, kinds)
+        whereKind = " where " + whereKind
+    }
+
+    query := "SELECT balance_id, amount, item, kind_id, purpose_id, place_id, date FROM balance"
+
+    rows, err := db.Query(query + whereKind, args...)
+    
+    defer rows.Close()
+    if err != nil {
+        return
+    }
+
+    for rows.Next() {
+        var balance_id int
+        var amount int
+        var item string
+        var kind_id int
+        var purpose_id int
+        var place_id int
+        var date string 
+
+        err := rows.Scan(&balance_id, &amount, &item, &kind_id, &purpose_id, &place_id, &date)
+        if err != nil {
+            return []entity.Balance{}, err
+        }
+        balance := entity.Balance{
+            BalanceId: balance_id,
+            Amount: amount,
+            Item: item,
+            KindId: kind_id,
+            PurposeId: purpose_id,
+            PlaceId: place_id,
+            Date: date,
+        }
+        balances = append(balances, balance)
+    }
+    return
+}
+
 func (MysqlBalanceRepository) SaveAll(balances entity.Balances) (err error) {
     db := db.Init();
     defer db.Close();
@@ -100,4 +149,19 @@ func save(balance entity.Balance, db *sql.DB) (err error) {
     }
 
     return
+}
+
+func getPlaceholder(n int) string {
+    p := "(?"
+    for i := 1; i < n; i++ {
+        p += ", ?"
+    }
+    return p + ")"
+}
+
+func pushArgs(args []interface{}, vals []string) []interface{} {
+    for _, val := range vals {
+        args = append(args, val)
+    }
+    return args
 }
