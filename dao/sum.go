@@ -42,7 +42,7 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
     var groupByAttributeQuery string
     var attributeColumn string
     attributeName := ""
-    if len(queries["atrributeName"]) != 0 {
+    if len(queries["attributeName"]) != 0 {
         attributeName = queries["attributeName"][0]
     }
     switch attributeName {
