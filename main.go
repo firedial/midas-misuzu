@@ -30,7 +30,7 @@ func main() {
         api.POST("/move/", func(c *gin.Context) { 
             var move interactor.Move
             c.BindJSON(&move)
-            c.JSON(200, controller.MovePost(move)) } )
+            c.String(200, controller.MovePost(move)) } )
         api.GET("/kind/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("kind")) } )
         api.GET("/purpose/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("purpose")) } )
         api.GET("/place/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("place")) } )
