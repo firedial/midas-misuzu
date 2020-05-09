@@ -3,6 +3,7 @@ package dao
 import (
     "github.com/firedial/midas-misuzu/entity"
     "github.com/firedial/midas-misuzu/db"
+    "strconv"
 )
 
 type MysqlSumRepository struct {
@@ -84,16 +85,17 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
     }
 
     for rows.Next() {
-        var id int
+        var attributeId int
         var date string 
         var amountSum int
 
-        err := rows.Scan(&id, &date, &amountSum)
+        err := rows.Scan(&attributeId, &date, &amountSum)
         if err != nil {
             return []entity.Sum{}, err
         }
         sum := entity.Sum{
-            Id: id,
+            Id: (strconv.Itoa(attributeId) + "-" + date),
+            AttributeId: attributeId,
             Date: date,
             AmountSum: amountSum,
         }
