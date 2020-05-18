@@ -15,7 +15,7 @@ func (MysqlBalanceRepository) FindAll() (balances entity.Balances, err error) {
     db := db.Init();
     defer db.Close();
 
-    rows, err := db.Query("SELECT balance_id, amount, item, kind_id, purpose_id, place_id, date FROM balance")
+    rows, err := db.Query("SELECT balance_id, amount, item, kind_id, purpose_id, place_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM balance")
     defer rows.Close()
     if err != nil {
         return
@@ -54,7 +54,7 @@ func (MysqlBalanceRepository) Find(queries map[string][]string) (balances entity
 
     where, args := getBalanceWhere(queries)
 
-    query := "SELECT balance_id, amount, item, kind_id, purpose_id, place_id, date FROM balance"
+    query := "SELECT balance_id, amount, item, kind_id, purpose_id, place_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM balance"
 
     rows, err := db.Query(query + where, args...)
     
