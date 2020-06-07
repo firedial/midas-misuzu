@@ -24,17 +24,20 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
     }
     switch groupByDate {
     case "day":
-        groupByDateQuery = "DATE_FORMAT(date, '%Y%m%d')"
-        dateColumn = "DATE_FORMAT(date, '%Y%m%d') as date"
+        groupByDateQuery = "DATE_FORMAT(date, '%Y/%m/%d')"
+        dateColumn = "DATE_FORMAT(date, '%Y/%m/%d') as date"
+    case "week":
+        groupByDateQuery = "DATE_FORMAT(SUBDATE(date, WEEKDAY(date)), '%Y/%m/%d')"
+        dateColumn = "DATE_FORMAT(SUBDATE(date, WEEKDAY(date)), '%Y/%m/%d') as date"
     case "month":
-        groupByDateQuery = "DATE_FORMAT(date, '%Y%m')"
-        dateColumn = "DATE_FORMAT(date, '%Y%m') as date"
+        groupByDateQuery = "DATE_FORMAT(date, '%Y/%m/01')"
+        dateColumn = "DATE_FORMAT(date, '%Y/%m/01') as date"
     case "year":
-        groupByDateQuery = "DATE_FORMAT(date, '%Y')"
-        dateColumn = "DATE_FORMAT(date, '%Y') as date"
+        groupByDateQuery = "DATE_FORMAT(date, '%Y/01/01')"
+        dateColumn = "DATE_FORMAT(date, '%Y/01/01') as date"
     case "fiscal_year":
-        groupByDateQuery = "DATE_FORMAT(date - INTERVAL 3 MONTH, '%Y')"
-        dateColumn = "DATE_FORMAT(date - INTERVAL 3 MONTH, '%Y') as date"
+        groupByDateQuery = "DATE_FORMAT(date - INTERVAL 3 MONTH, '%Y/04/01')"
+        dateColumn = "DATE_FORMAT(date - INTERVAL 3 MONTH, '%Y/04/01') as date"
     default:
         groupByDateQuery = ""
         dateColumn = "\"1000/1/1\" as date"
