@@ -87,17 +87,19 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
         return []entity.Sum{}, err
     }
 
+    var i = 0;
     for rows.Next() {
         var attributeId int
         var date string 
         var amountSum int
+        i++
 
         err := rows.Scan(&attributeId, &date, &amountSum)
         if err != nil {
             return []entity.Sum{}, err
         }
         sum := entity.Sum{
-            Id: (strconv.Itoa(attributeId) + "-" + date),
+            Id: strconv.Itoa(i),
             AttributeId: attributeId,
             Date: date,
             AmountSum: amountSum,
