@@ -87,7 +87,7 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
         return []entity.Sum{}, err
     }
 
-    var i = 0;
+    i := 0
     for rows.Next() {
         var attributeId int
         var date string 
