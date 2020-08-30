@@ -35,6 +35,7 @@ func main() {
         api.GET("/purpose/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("purpose")) } )
         api.GET("/place/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("place")) } )
         api.GET("/sum/", func(c *gin.Context) { c.JSON(200, controller.SumGet(c.Request.URL.Query())) } )
+        api.GET("/chart/", func(c *gin.Context) { c.JSON(200, controller.ChartGet(c.Request.URL.Query())) } )
     }
     r.Run()
 
