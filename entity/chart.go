@@ -1,7 +1,7 @@
 package entity
 
 type AttributeData struct {
-    Name string `json:"name"` 
+    Id int `json:"id"` 
     Value []int `json:"value"`
 }
 
