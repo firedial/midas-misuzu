@@ -4,7 +4,7 @@ type Attribute struct {
     Id int `json:"id"`
     Name string `json:"name"`
     Description string `json:"description"`
-    GroupId int `json:"group_id"`
+    CategoryId int `json:"category_id"`
 }
 
 type Attributes []Attribute

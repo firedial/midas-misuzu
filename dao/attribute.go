@@ -13,7 +13,9 @@ func (MysqlAttributeRepository) FindAll(attributeName string) (attributes entity
     db := db.Init();
     defer db.Close();
 
-    rows, err := db.Query("SELECT id, name, description, group_id FROM " + attributeName)
+    query := "SELECT " + attributeName + "_element_id AS id, " + attributeName + "_element_name, " + attributeName + "_element_description, " + attributeName + "_category_id FROM " + "m_" + attributeName + "_element"
+
+    rows, err := db.Query(query)
     defer rows.Close()
     if err != nil {
         return
@@ -23,9 +25,9 @@ func (MysqlAttributeRepository) FindAll(attributeName string) (attributes entity
         var id int
         var name string
         var description string 
-        var group_id int
+        var category_id int
 
-        err := rows.Scan(&id, &name, &description, &group_id)
+        err := rows.Scan(&id, &name, &description, &category_id)
         if err != nil {
             return []entity.Attribute{}, err
         }
@@ -33,7 +35,7 @@ func (MysqlAttributeRepository) FindAll(attributeName string) (attributes entity
             Id: id,
             Name: name,
             Description: description,
-            GroupId: group_id,
+            CategoryId: category_id,
         }
         attributes = append(attributes, attribute)
     }
