@@ -51,14 +51,14 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
     }
     switch attributeName {
     case "place":
-        groupByAttributeQuery = "place_id"
-        attributeColumn = "place_id as id"
+        groupByAttributeQuery = "place_element_id"
+        attributeColumn = "place_element_id as id"
     case "purpose":
-        groupByAttributeQuery = "purpose_id"
-        attributeColumn = "purpose_id as id"
+        groupByAttributeQuery = "purpose_element_id"
+        attributeColumn = "purpose_element_id as id"
     case "kind":
-        groupByAttributeQuery = "kind_id"
-        attributeColumn = "kind_id as id"
+        groupByAttributeQuery = "kind_element_id"
+        attributeColumn = "kind_element_id as id"
     default:
         groupByAttributeQuery = ""
         attributeColumn = "0 as id"
@@ -79,7 +79,7 @@ func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, e
         }
     }
 
-    query := "SELECT " + attributeColumn + ", " + dateColumn + ", " + "sum(amount) as sum FROM balance"
+    query := "SELECT " + attributeColumn + ", " + dateColumn + ", " + "sum(amount) as sum FROM m_balance"
 
     rows, err := db.Query(query + " " + where + " " + groupBy, args...)
     defer rows.Close()

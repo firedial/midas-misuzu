@@ -15,7 +15,7 @@ func (MysqlBalanceRepository) FindAll() (balances entity.Balances, err error) {
     db := db.Init();
     defer db.Close();
 
-    rows, err := db.Query("SELECT balance_id, amount, item, kind_id, purpose_id, place_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM balance")
+    rows, err := db.Query("SELECT balance_id, amount, item, kind_element_id, purpose_element_id, place_element_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM m_balance")
     defer rows.Close()
     if err != nil {
         return
@@ -54,7 +54,7 @@ func (MysqlBalanceRepository) Find(queries map[string][]string) (balances entity
 
     where, args := getBalanceWhere(queries)
 
-    query := "SELECT balance_id, amount, item, kind_id, purpose_id, place_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM balance"
+    query := "SELECT balance_id, amount, item, kind_element_id, purpose_element_id, place_element_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM m_balance"
 
     rows, err := db.Query(query + where, args...)
     
@@ -122,12 +122,12 @@ func (MysqlBalanceRepository) SaveAll(balances entity.Balances) (err error) {
 func save(balance entity.Balance, db *sql.DB) (err error) {
 
     stmt, err := db.Prepare(`
-        INSERT INTO balance (
+        INSERT INTO m_balance (
             amount,
             item,
-            kind_id,
-            purpose_id,
-            place_id,
+            kind_element_id,
+            purpose_element_id,
+            place_element_id,
             date
         ) VALUES 
         (?, ?, ?, ?, ?, ?)`)
