@@ -5,7 +5,24 @@ import(
     "github.com/firedial/midas-misuzu/entity"
 )
 
-func AttributeGet(attribute_name string) entity.Attributes {
-    attributes, _ := interactor.GetAttribute(attribute_name)
-    return attributes
+type returnJson struct {
+    Status string `json:"status"`
+    Message string `json:"message"`
+    Data entity.Attributes `json:"data"`
+}
+
+
+func AttributeGet(attribute_name string) returnJson {
+    attributes, err := interactor.GetAttribute(attribute_name)
+    
+    status := "OK"
+    message := ""
+    if err != nil {
+        status = "NG"
+        message = err.Error()
+    }
+    return returnJson{
+        Status: status,
+        Message: message,
+        Data: attributes} 
 }

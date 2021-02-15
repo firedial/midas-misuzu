@@ -10,6 +10,10 @@ type MysqlAttributeRepository struct {
 }
 
 func (MysqlAttributeRepository) FindAll(attributeName string) (attributes entity.Attributes, err error) {
+    defer func() { recover() }()
+
+    attributes = []entity.Attribute{}
+
     db := db.Init();
     defer db.Close();
 

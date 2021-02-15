@@ -31,11 +31,12 @@ func main() {
             var move interactor.Move
             c.BindJSON(&move)
             c.String(200, controller.MovePost(move)) } )
-        api.GET("/kind/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("kind")) } )
-        api.GET("/purpose/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("purpose")) } )
-        api.GET("/place/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("place")) } )
         api.GET("/sum/", func(c *gin.Context) { c.JSON(200, controller.SumGet(c.Request.URL.Query())) } )
         api.GET("/chart/", func(c *gin.Context) { c.JSON(200, controller.ChartGet(c.Request.URL.Query())) } )
+
+        api.GET("/kind_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("kind")) } )
+        api.GET("/purpose_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("purpose")) } )
+        api.GET("/place_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("place")) } )
     }
     r.Run()
 
