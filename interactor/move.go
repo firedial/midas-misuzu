@@ -23,10 +23,10 @@ func InsertMove(move Move) string {
 
     err := balanceRepository.SaveAll(balances);
     if err != nil {
-        return "\"DB error!\""
+        return err.Error()
     }
 
-    return "\"OK\""
+    return ""
 }
 
 func getMoveBalance(move Move) entity.Balances {

@@ -30,7 +30,7 @@ func main() {
         api.POST("/move/", func(c *gin.Context) { 
             var move interactor.Move
             c.BindJSON(&move)
-            c.String(200, controller.MovePost(move)) } )
+            c.JSON(200, controller.MovePost(move)) } )
         api.GET("/sum/", func(c *gin.Context) { c.JSON(200, controller.SumGet(c.Request.URL.Query())) } )
         api.GET("/chart/", func(c *gin.Context) { c.JSON(200, controller.ChartGet(c.Request.URL.Query())) } )
 
