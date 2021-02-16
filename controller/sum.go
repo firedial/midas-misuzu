@@ -16,7 +16,7 @@ func SumGet(queries map[string][]string) returnSumsJson {
 
     message := ""
     status := "OK"
-    if message != "" {
+    if err != nil {
         status = "NG"
         message = err.Error()
     }
