@@ -26,7 +26,7 @@ func main() {
         api.POST("/balance/", func(c *gin.Context) { 
             var balance entity.Balance
             c.BindJSON(&balance)
-            c.String(200, controller.BalancePost(balance)) } )
+            c.JSON(200, controller.BalancePost(balance)) } )
         api.POST("/move/", func(c *gin.Context) { 
             var move interactor.Move
             c.BindJSON(&move)

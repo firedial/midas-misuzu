@@ -12,6 +12,10 @@ type MysqlBalanceRepository struct {
 }
 
 func (MysqlBalanceRepository) Find(queries map[string][]string) (balances entity.Balances, err error) {
+    defer func() { recover() }()
+
+    balances = []entity.Balance{}
+
     db := db.Init();
     defer db.Close();
 
@@ -26,7 +30,6 @@ func (MysqlBalanceRepository) Find(queries map[string][]string) (balances entity
         return
     }
 
-    balances = []entity.Balance{}
     for rows.Next() {
         var balance_id int
         var amount int

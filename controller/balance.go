@@ -5,11 +5,36 @@ import(
     "github.com/firedial/midas-misuzu/interactor"
 )
 
-func BalanceGet(queries map[string][]string) entity.Balances {
-    balances, _ := interactor.GetBalance(queries)
-    return balances
+type returnBalancesJson struct {
+    Status string `json:"status"`
+    Message string `json:"message"`
+    Data entity.Balances `json:"data"`
 }
 
-func BalancePost(balance entity.Balance) string {
-    return interactor.InsertBalances(balance)
+func BalanceGet(queries map[string][]string) returnBalancesJson {
+    balances, err := interactor.GetBalance(queries)
+
+    status := "OK"
+    message := ""
+    if err != nil {
+        status = "NG"
+        message = err.Error()
+    }
+    return returnBalancesJson{
+        Status: status,
+        Message: message,
+        Data: balances} 
+}
+
+func BalancePost(balance entity.Balance) returnBalancesJson {
+    message := interactor.InsertBalances(balance)
+
+    status := "OK"
+    if message != "" {
+        status = "NG"
+    }
+    return returnBalancesJson{
+        Status: status,
+        Message: message,
+        Data: []entity.Balance{}}
 }
