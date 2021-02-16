@@ -11,43 +11,6 @@ type MysqlBalanceRepository struct {
     
 }
 
-func (MysqlBalanceRepository) FindAll() (balances entity.Balances, err error) {
-    db := db.Init();
-    defer db.Close();
-
-    rows, err := db.Query("SELECT balance_id, amount, item, kind_element_id, purpose_element_id, place_element_id, DATE_FORMAT(date, '%Y/%m/%d') as date FROM m_balance")
-    defer rows.Close()
-    if err != nil {
-        return
-    }
-
-    for rows.Next() {
-        var balance_id int
-        var amount int
-        var item string
-        var kind_id int
-        var purpose_id int
-        var place_id int
-        var date string 
-
-        err := rows.Scan(&balance_id, &amount, &item, &kind_id, &purpose_id, &place_id, &date)
-        if err != nil {
-            return []entity.Balance{}, err
-        }
-        balance := entity.Balance{
-            BalanceId: balance_id,
-            Amount: amount,
-            Item: item,
-            KindId: kind_id,
-            PurposeId: purpose_id,
-            PlaceId: place_id,
-            Date: date,
-        }
-        balances = append(balances, balance)
-    }
-    return
-}
-
 func (MysqlBalanceRepository) Find(queries map[string][]string) (balances entity.Balances, err error) {
     db := db.Init();
     defer db.Close();
