@@ -5,16 +5,24 @@ import(
     "github.com/firedial/midas-misuzu/entity"
 )
 
-func SumGet(queries map[string][]string) entity.Sums {
-    sums, _ := interactor.GetSum(queries)
-    return sums
+type returnSumsJson struct {
+    Status string `json:"status"`
+    Message string `json:"message"`
+    Data entity.Sums `json:"data"`
 }
 
-func getQuery(queries map[string][]string, name string) string {
-    vals, ok := queries[name]
-    if !ok {
-        return ""
+func SumGet(queries map[string][]string) returnSumsJson {
+    sums, err := interactor.GetSum(queries)
+
+    message := ""
+    status := "OK"
+    if message != "" {
+        status = "NG"
+        message = err.Error()
     }
-
-    return vals[0]
+    return returnSumsJson{
+        Status: status,
+        Message: message,
+        Data: sums}
 }
+

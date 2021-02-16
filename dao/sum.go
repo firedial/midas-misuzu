@@ -11,6 +11,10 @@ type MysqlSumRepository struct {
 }
 
 func (MysqlSumRepository) Find(queries map[string][]string) (sums entity.Sums, err error) {
+    defer func() { recover() }()
+
+    sums = []entity.Sum{}
+
     db := db.Init();
     defer db.Close();
 
