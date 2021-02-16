@@ -5,7 +5,13 @@ import(
     "github.com/firedial/midas-misuzu/interactor"
 )
 
-func ChartGet(queries map[string][]string) entity.Chart {
+type returnChartJson struct {
+    Status string `json:"status"`
+    Message string `json:"message"`
+    Data entity.Chart `json:"data"`
+}
+
+func ChartGet(queries map[string][]string) returnChartJson {
     /*
     r := entity.Chart{
         Label: [] string{"a", "b"},
@@ -18,6 +24,16 @@ func ChartGet(queries map[string][]string) entity.Chart {
                 Value: [] int{1500, 2500}}}}
     */
 
-    data, _ := interactor.GetChartData(queries)
-    return data
+    data, err := interactor.GetChartData(queries)
+
+    message := ""
+    status := "OK"
+    if err != nil {
+        status = "NG"
+        message = err.Error()
+    }
+    return returnChartJson{
+        Status: status,
+        Message: message,
+        Data: data}
 }

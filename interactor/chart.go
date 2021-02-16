@@ -9,6 +9,10 @@ import (
 func GetChartData(queries map[string][]string) (entity.Chart, error) {
     sums, err := sumRepository.Find(queries)
 
+    if err != nil {
+        return entity.Chart{}, err
+    }
+
     if len(sums) == 0 {
         return entity.Chart{
             Label: []string{},
