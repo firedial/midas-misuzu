@@ -68,7 +68,7 @@ func saveElement(attributeName string, attribute entity.Attribute, db *sql.DB) (
         INSERT INTO m_` + attributeName + `_element (
             ` + attributeName + `_element_name,
             ` + attributeName + `_element_description,
-            ` + attributeName + `_element_category_id
+            ` + attributeName + `_category_id
         ) VALUES 
         (?, ?, ?)`)
 

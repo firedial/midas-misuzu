@@ -34,9 +34,21 @@ func main() {
         api.GET("/sum/", func(c *gin.Context) { c.JSON(200, controller.SumGet(c.Request.URL.Query())) } )
         api.GET("/chart/", func(c *gin.Context) { c.JSON(200, controller.ChartGet(c.Request.URL.Query())) } )
 
-        api.GET("/kind_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("kind")) } )
-        api.GET("/purpose_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("purpose")) } )
-        api.GET("/place_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeGet("place")) } )
+        api.GET("/kind_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("kind")) } )
+        api.GET("/purpose_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("purpose")) } )
+        api.GET("/place_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("place")) } )
+        api.POST("/kind_elements/", func(c *gin.Context) { 
+            var attributeElement entity.Attribute
+            c.BindJSON(&attributeElement)
+            c.JSON(200, controller.AttributeElementPost("kind", attributeElement)) } )
+        api.POST("/purpose_elements/", func(c *gin.Context) { 
+            var attributeElement entity.Attribute
+            c.BindJSON(&attributeElement)
+            c.JSON(200, controller.AttributeElementPost("purpose", attributeElement)) } )
+        api.POST("/place_elements/", func(c *gin.Context) { 
+            var attributeElement entity.Attribute
+            c.BindJSON(&attributeElement)
+            c.JSON(200, controller.AttributeElementPost("place", attributeElement)) } )
     }
     r.Run()
 

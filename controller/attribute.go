@@ -12,8 +12,8 @@ type returnAttributesJson struct {
 }
 
 
-func AttributeGet(attribute_name string) returnAttributesJson {
-    attributes, err := interactor.GetAttribute(attribute_name)
+func AttributeElementsGet(attribute_name string) returnAttributesJson {
+    attributes, err := interactor.GetAttributeElements(attribute_name)
     
     status := "OK"
     message := ""
@@ -25,4 +25,17 @@ func AttributeGet(attribute_name string) returnAttributesJson {
         Status: status,
         Message: message,
         Data: attributes} 
+}
+
+func AttributeElementPost(attributeName string, attribute entity.Attribute) returnAttributesJson {
+    message := interactor.InsertAttributeElement(attributeName, attribute)
+
+    status := "OK"
+    if message != "" {
+        status = "NG"
+    }
+    return returnAttributesJson{
+        Status: status,
+        Message: message,
+        Data: []entity.Attribute{}}
 }
