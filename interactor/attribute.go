@@ -5,5 +5,5 @@ import (
 )
 
 func GetAttribute(attributeName string) (entity.Attributes, error) {
-    return attributeRepository.FindAll(attributeName)
+    return attributeRepository.FindAllElement(attributeName)
 }

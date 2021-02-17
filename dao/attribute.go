@@ -1,6 +1,8 @@
 package dao
 
 import (
+    "database/sql"
+
     "github.com/firedial/midas-misuzu/entity"
     "github.com/firedial/midas-misuzu/db"
 )
@@ -9,7 +11,7 @@ type MysqlAttributeRepository struct {
     
 }
 
-func (MysqlAttributeRepository) FindAll(attributeName string) (attributes entity.Attributes, err error) {
+func (MysqlAttributeRepository) FindAllElement(attributeName string) (attributes entity.Attributes, err error) {
     defer func() { recover() }()
 
     attributes = []entity.Attribute{}
@@ -45,3 +47,42 @@ func (MysqlAttributeRepository) FindAll(attributeName string) (attributes entity
     }
     return
 }
+
+func (MysqlAttributeRepository) SaveElement(attributeName string, attribute entity.Attribute) (err error) {
+    defer func() { recover() }()
+
+    db := db.Init();
+    defer db.Close();
+
+    err = saveElement(attributeName, attribute, db)
+    if err != nil {
+        return
+    }
+
+    return 
+}
+
+func saveElement(attributeName string, attribute entity.Attribute, db *sql.DB) (err error) {
+
+    stmt, err := db.Prepare(`
+        INSERT INTO m_` + attributeName + `_element (
+            ` + attributeName + `_element_name,
+            ` + attributeName + `_element_description,
+            ` + attributeName + `_element_category_id
+        ) VALUES 
+        (?, ?, ?)`)
+
+    if err != nil {
+        return 
+    }
+    defer stmt.Close()
+
+    _, err = stmt.Exec(attribute.Name, attribute.Description, attribute.CategoryId)
+    if err != nil {
+        return
+    }
+
+    return
+}
+
+
