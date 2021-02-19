@@ -96,7 +96,7 @@ func (MysqlAttributeRepository) FindAllCategory(attributeName string) (attribute
     db := db.Init();
     defer db.Close();
 
-    query := "SELECT " + attributeName + "_category_id AS id, " + attributeName + "_category AS name, " + attributeName + "_category AS description FROM " + "m_" + attributeName + "_category"
+    query := "SELECT " + attributeName + "_category_id AS id, " + attributeName + "_category_name AS name, " + attributeName + "_category_description AS description FROM " + "m_" + attributeName + "_category"
 
     rows, err := db.Query(query)
     defer rows.Close()
