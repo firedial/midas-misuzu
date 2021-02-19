@@ -38,15 +38,15 @@ func main() {
         api.GET("/purpose_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("purpose")) } )
         api.GET("/place_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("place")) } )
         api.POST("/kind_elements/", func(c *gin.Context) { 
-            var attributeElement entity.Attribute
+            var attributeElement entity.AttributeElement
             c.BindJSON(&attributeElement)
             c.JSON(200, controller.AttributeElementPost("kind", attributeElement)) } )
         api.POST("/purpose_elements/", func(c *gin.Context) { 
-            var attributeElement entity.Attribute
+            var attributeElement entity.AttributeElement
             c.BindJSON(&attributeElement)
             c.JSON(200, controller.AttributeElementPost("purpose", attributeElement)) } )
         api.POST("/place_elements/", func(c *gin.Context) { 
-            var attributeElement entity.Attribute
+            var attributeElement entity.AttributeElement
             c.BindJSON(&attributeElement)
             c.JSON(200, controller.AttributeElementPost("place", attributeElement)) } )
     }

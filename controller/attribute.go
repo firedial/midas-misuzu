@@ -8,7 +8,7 @@ import(
 type returnAttributesJson struct {
     Status string `json:"status"`
     Message string `json:"message"`
-    Data entity.Attributes `json:"data"`
+    Data entity.AttributeElements `json:"data"`
 }
 
 
@@ -27,7 +27,7 @@ func AttributeElementsGet(attribute_name string) returnAttributesJson {
         Data: attributes} 
 }
 
-func AttributeElementPost(attributeName string, attribute entity.Attribute) returnAttributesJson {
+func AttributeElementPost(attributeName string, attribute entity.AttributeElement) returnAttributesJson {
     message := interactor.InsertAttributeElement(attributeName, attribute)
 
     status := "OK"
@@ -37,5 +37,5 @@ func AttributeElementPost(attributeName string, attribute entity.Attribute) retu
     return returnAttributesJson{
         Status: status,
         Message: message,
-        Data: []entity.Attribute{}}
+        Data: []entity.AttributeElement{}}
 }

@@ -11,10 +11,10 @@ type MysqlAttributeRepository struct {
     
 }
 
-func (MysqlAttributeRepository) FindAllElement(attributeName string) (attributes entity.Attributes, err error) {
+func (MysqlAttributeRepository) FindAllElement(attributeName string) (attributes entity.AttributeElements, err error) {
     defer func() { recover() }()
 
-    attributes = []entity.Attribute{}
+    attributes = []entity.AttributeElement{}
 
     db := db.Init();
     defer db.Close();
@@ -35,9 +35,9 @@ func (MysqlAttributeRepository) FindAllElement(attributeName string) (attributes
 
         err := rows.Scan(&id, &name, &description, &category_id)
         if err != nil {
-            return []entity.Attribute{}, err
+            return []entity.AttributeElement{}, err
         }
-        attribute := entity.Attribute{
+        attribute := entity.AttributeElement{
             Id: id,
             Name: name,
             Description: description,
@@ -48,7 +48,7 @@ func (MysqlAttributeRepository) FindAllElement(attributeName string) (attributes
     return
 }
 
-func (MysqlAttributeRepository) SaveElement(attributeName string, attribute entity.Attribute) (err error) {
+func (MysqlAttributeRepository) SaveElement(attributeName string, attribute entity.AttributeElement) (err error) {
     defer func() { recover() }()
 
     db := db.Init();
@@ -62,7 +62,7 @@ func (MysqlAttributeRepository) SaveElement(attributeName string, attribute enti
     return 
 }
 
-func saveElement(attributeName string, attribute entity.Attribute, db *sql.DB) (err error) {
+func saveElement(attributeName string, attribute entity.AttributeElement, db *sql.DB) (err error) {
 
     stmt, err := db.Prepare(`
         INSERT INTO m_` + attributeName + `_element (
