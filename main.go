@@ -38,17 +38,66 @@ func main() {
         api.GET("/purpose_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("purpose")) } )
         api.GET("/place_elements/", func(c *gin.Context) { c.JSON(200, controller.AttributeElementsGet("place")) } )
         api.POST("/kind_elements/", func(c *gin.Context) { 
-            var attributeElement entity.AttributeElement
-            c.BindJSON(&attributeElement)
-            c.JSON(200, controller.AttributeElementPost("kind", attributeElement)) } )
+            var attribute entity.AttributeElement
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeElementPost("kind", attribute)) } )
         api.POST("/purpose_elements/", func(c *gin.Context) { 
-            var attributeElement entity.AttributeElement
-            c.BindJSON(&attributeElement)
-            c.JSON(200, controller.AttributeElementPost("purpose", attributeElement)) } )
+            var attribute entity.AttributeElement
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeElementPost("purpose", attribute)) } )
         api.POST("/place_elements/", func(c *gin.Context) { 
-            var attributeElement entity.AttributeElement
-            c.BindJSON(&attributeElement)
-            c.JSON(200, controller.AttributeElementPost("place", attributeElement)) } )
+            var attribute entity.AttributeElement
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeElementPost("place", attribute)) } )
+
+        api.GET("/kind_categories/", func(c *gin.Context) { c.JSON(200, controller.AttributeCategoriesGet("kind")) } )
+        api.GET("/purpose_categories/", func(c *gin.Context) { c.JSON(200, controller.AttributeCategoriesGet("purpose")) } )
+        api.GET("/place_categories/", func(c *gin.Context) { c.JSON(200, controller.AttributeCategoriesGet("place")) } )
+        api.POST("/kind_categories/", func(c *gin.Context) { 
+            var attribute entity.AttributeCategory
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeCategoryPost("kind", attribute)) } )
+        api.POST("/purpose_categories/", func(c *gin.Context) { 
+            var attribute entity.AttributeCategory
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeCategoryPost("purpose", attribute)) } )
+        api.POST("/place_categories/", func(c *gin.Context) { 
+            var attribute entity.AttributeCategory
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeCategoryPost("place", attribute)) } )
+ 
+        api.GET("/kind_groups/", func(c *gin.Context) { c.JSON(200, controller.AttributeGroupsGet("kind")) } )
+        api.GET("/purpose_groups/", func(c *gin.Context) { c.JSON(200, controller.AttributeGroupsGet("purpose")) } )
+        api.GET("/place_groups/", func(c *gin.Context) { c.JSON(200, controller.AttributeGroupsGet("place")) } )
+        api.POST("/kind_groups/", func(c *gin.Context) { 
+            var attribute entity.AttributeGroup
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeGroupPost("kind", attribute)) } )
+        api.POST("/purpose_groups/", func(c *gin.Context) { 
+            var attribute entity.AttributeGroup
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeGroupPost("purpose", attribute)) } )
+        api.POST("/place_groups/", func(c *gin.Context) { 
+            var attribute entity.AttributeGroup
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeGroupPost("place", attribute)) } )
+ 
+        api.GET("/kind_group_relations/", func(c *gin.Context) { c.JSON(200, controller.AttributeGroupRelationsGet("kind")) } )
+        api.GET("/purpose_group_relations/", func(c *gin.Context) { c.JSON(200, controller.AttributeGroupRelationsGet("purpose")) } )
+        api.GET("/place_group_relations/", func(c *gin.Context) { c.JSON(200, controller.AttributeGroupRelationsGet("place")) } )
+        api.POST("/kind_group_relations/", func(c *gin.Context) { 
+            var attribute entity.AttributeGroupRelation
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeGroupRelationPost("kind", attribute)) } )
+        api.POST("/purpose_group_relations/", func(c *gin.Context) { 
+            var attribute entity.AttributeGroupRelation
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeGroupRelationPost("purpose", attribute)) } )
+        api.POST("/place_group_relations/", func(c *gin.Context) { 
+            var attribute entity.AttributeGroupRelation
+            c.BindJSON(&attribute)
+            c.JSON(200, controller.AttributeGroupRelationPost("place", attribute)) } )
+ 
     }
     r.Run()
 
