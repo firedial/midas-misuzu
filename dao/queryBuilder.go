@@ -10,17 +10,17 @@ func getBalanceWhere(queries map[string][]string) (string, []interface{}) {
 
     whereKind := ""
     if len(queries["kind[]"]) != 0 {
-        whereKind = " and kind_id in " + getPlaceholder(len(queries["kind[]"]))
+        whereKind = " and kind_element_id in " + getPlaceholder(len(queries["kind[]"]))
         args = pushArgs(args, queries["kind[]"])
     }
     wherePurpose := ""
     if len(queries["purpose[]"]) != 0 {
-        wherePurpose = " and purpose_id in " + getPlaceholder(len(queries["purpose[]"]))
+        wherePurpose = " and purpose_element_id in " + getPlaceholder(len(queries["purpose[]"]))
         args = pushArgs(args, queries["purpose[]"])
     }
     wherePlace := ""
     if len(queries["place[]"]) != 0 {
-        wherePlace = " and place_id in " + getPlaceholder(len(queries["place[]"]))
+        wherePlace = " and place_element_id in " + getPlaceholder(len(queries["place[]"]))
         args = pushArgs(args, queries["place[]"])
     }
 
