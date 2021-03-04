@@ -8,6 +8,7 @@ import (
     "github.com/firedial/midas-misuzu/config"
     "github.com/firedial/midas-misuzu/entity"
     "github.com/firedial/midas-misuzu/interactor"
+    "github.com/firedial/midas-misuzu/auth"
 )
 
 func main() {
@@ -16,12 +17,28 @@ func main() {
         gin.SetMode(gin.ReleaseMode)
     }
 
+    salt := auth.GetSalt()
+    authToken := auth.GetAuthToken(salt, config.ACCESS_PASSWORD)
+
     r := gin.Default()
     r.Use(cors.Default())
-    r.Use(Auth())
+    r.Use(Auth(authToken))
 
     api := r.Group("/api/v1")
     {
+        api.POST("/authentication/", func(c *gin.Context) { 
+            c.JSON(200, controller.AuthPost(salt, c.PostForm("pass"))) } )
+        api.GET("/authentication/check/", func(c *gin.Context) { 
+            c.JSON(200, controller.AuthCheck("Bearer " + authToken == c.Request.Header.Get("Authorization"))) } )
+        api.GET("/authentication/refresh/", func(c *gin.Context) { 
+            salt = auth.GetSalt()
+            authToken = auth.GetAuthToken(salt, config.ACCESS_PASSWORD)
+            c.JSON(200, gin.H{
+                "status": "OK",
+                "message": "",
+            })
+        })
+
         api.GET("/balance/", func(c *gin.Context) { c.JSON(200, controller.BalanceGet(c.Request.URL.Query())) } )
         api.POST("/balance/", func(c *gin.Context) { 
             var balance entity.Balance
@@ -103,12 +120,16 @@ func main() {
 
 }
 
-func Auth() gin.HandlerFunc {
+func Auth(authToken string) gin.HandlerFunc {
     return func(c *gin.Context) {
         token := c.Request.Header.Get("Authorization")
-        
-        if token != "Bearer token" {
-            //c.AbortWithStatus(401)
+
+        if c.Request.URL.Path == "/api/v1/authentication/" {
+
+        } else if c.Request.URL.Path == "/api/v1/authentication/check/" {
+
+        } else if token != "Bearer " + authToken {
+            c.AbortWithStatus(401)
         }
         c.Next()
     }
