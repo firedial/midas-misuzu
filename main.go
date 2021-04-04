@@ -125,9 +125,7 @@ func Auth(authToken string) gin.HandlerFunc {
         token := c.Request.Header.Get("Authorization")
 
         if c.Request.URL.Path == "/api/v1/authentication/" {
-
-        } else if c.Request.URL.Path == "/api/v1/authentication/check/" {
-
+            // 認証
         } else if token != "Bearer " + authToken {
             c.AbortWithStatus(401)
         }
